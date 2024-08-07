@@ -19,6 +19,9 @@ public class BrettspringApplication {
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();    // tomcat 말고도 사용 가능
         WebServer webServer = serverFactory.getWebServer(servletContext -> {
             servletContext.addServlet("frontcontroller", new HttpServlet() {
+
+                final HelloController helloController = new HelloController();  // mapping
+
                 @Override
                 protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                     // 인증, 보안, 다국어, 공통 기능
@@ -28,9 +31,11 @@ public class BrettspringApplication {
                     ) {
                         String name = req.getParameter("name");
 
+                        String hello = helloController.hello(name);
+
                         resp.setStatus(HttpStatus.OK.value());
                         resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
-                        resp.getWriter().println("Hello " + name);
+                        resp.getWriter().println(hello);
                     } else if(req.getRequestURI().equals("/user")) {
                         //
                     } else {
