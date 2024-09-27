@@ -3,24 +3,14 @@ package com.kakaopaysec.brettspring;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
+@ComponentScan  // @Component 로 등록된 모든 클래스를 Bean 으로 등록시켜준다.
 public class BrettspringApplication {
-
-    @Bean
-    public HelloController helloController(HelloService helloService) {
-        return new HelloController(helloService);
-    }
-
-    @Bean
-    public HelloService helloService() {
-        return new SimpleHelloService();
-    }
-
     public static void main(String[] args) {
         // GenericWebApplicationContext 템플릿 메소드 패턴 : 상속을 통해 기능을 확장
         // onRefresh : 스프링 컨테이너를 초기화 하던 중에 부가적으로 작업을 수행할 때 사용
